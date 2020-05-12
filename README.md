@@ -1,4 +1,4 @@
-# hello-world
+# seu-publicity-changeAvatar
 
 ## Project setup
 ```
