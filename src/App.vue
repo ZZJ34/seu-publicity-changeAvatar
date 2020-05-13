@@ -2,8 +2,11 @@
   <div id="app" @touchmove.prevent @mousewheel.prevent>
     <canvas id="page"></canvas>
     <canvas id="avatar"></canvas>
-    <canvas id="left"></canvas>
-    <canvas id="right"></canvas>
+    <canvas id="left" @click="changeLeft"></canvas>
+    <canvas id="right" @click="changeRight"></canvas>
+    <!--
+    <button id="upload">上传图片</button>
+    -->
   </div>
 </template>
 
@@ -32,29 +35,37 @@ import avatar10 from "./assets/10.png"
 import avatar11 from "./assets/11.png"
 // eslint-disable-next-line no-unused-vars
 import avatar12 from "./assets/12.png"
+import arrowLeft from "./assets/anniversary-left.png"
+import arrowRight from "./assets/anniversary-right.png"
 export default {
   name: 'App',
   data(){
     return{
       background,
-      avatar1,
-      avatar2,
-      avatar3,
-      avatar4,
-      avatar5,
-      avatar6,
-      avatar7,
-      avatar8,
-      avatar9,
-      avatar10,
-      avatar11,
-      avatar12,
+      arrowLeft,
+      arrowRight,
+      avatarList:{
+        0:avatar1,
+        1:avatar2,
+        2:avatar3,
+        3:avatar4,
+        4:avatar5,
+        5:avatar6,
+        6:avatar7,
+        7:avatar8,
+        8:avatar9,
+        9:avatar10,
+        10:avatar11,
+        11:avatar12
+      },
+      avatarTotal: 12,
+      avatarCurrent: 11,
       isSupportCanvas: true,
     }
   },
   methods:{
     initCanvas(){
-      let canvas = canvas = document.getElementById('page')
+      let canvas = document.getElementById('page')
       let ctx = canvas.getContext('2d')
       // 画布高度
       let winH = window.innerHeight
@@ -70,9 +81,9 @@ export default {
       imgBackground.src = this.background
     },
     initAvatar(){
-      let canvas = canvas = document.getElementById('avatar')
+      let canvas = document.getElementById('avatar')
       let ctx = canvas.getContext('2d')
-      let sideLength = 906 / 1671 * 0.45 * window.innerHeight
+      let sideLength = 0.25 * window.innerHeight
       canvas.width = sideLength
       canvas.height = sideLength
       // 装载图片
@@ -80,7 +91,65 @@ export default {
       imgAvatar.onload = () => {
         ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
       }
-      imgAvatar.src = this.avatar5
+      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
+    },
+    initArrow(){
+      let arrowHeight = 0.07 * window.innerHeight
+      let arrowWidth = 149 / 123 * arrowHeight
+      
+      // 左箭头
+      let canvasLeft = document.getElementById('left')
+      let ctxLeft = canvasLeft.getContext('2d')
+      canvasLeft.width = arrowWidth
+      canvasLeft.height = arrowHeight
+      // 装载图片
+      let imgLeft = new Image()
+      imgLeft.onload = () => {
+        ctxLeft.drawImage(imgLeft,0,0,arrowWidth,arrowHeight)
+      }
+      imgLeft.src = this.arrowLeft
+      
+      // 右箭头
+      let canvasRight = document.getElementById('right')
+      let ctxRight = canvasRight.getContext('2d')
+      canvasRight.width = arrowWidth
+      canvasRight.height = arrowHeight
+      // 装载图片
+      let imgRight = new Image()
+      imgRight.onload = () => {
+        ctxRight.drawImage(imgRight,0,0,arrowWidth,arrowHeight)
+      }
+      imgRight.src = this.arrowRight
+    },
+
+    changeLeft(){
+      this.avatarCurrent = this.avatarCurrent - 1
+      let canvas = document.getElementById('avatar')
+      let ctx = canvas.getContext('2d')
+      let sideLength = 0.25 * window.innerHeight
+      canvas.width = sideLength
+      canvas.height = sideLength
+      // 装载图片
+      let imgAvatar = new Image()
+      imgAvatar.onload = () => {
+        ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
+      }
+      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
+
+    },
+    changeRight(){
+      this.avatarCurrent = this.avatarCurrent + 1
+      let canvas = document.getElementById('avatar')
+      let ctx = canvas.getContext('2d')
+      let sideLength = 0.25 * window.innerHeight
+      canvas.width = sideLength
+      canvas.height = sideLength
+      // 装载图片
+      let imgAvatar = new Image()
+      imgAvatar.onload = () => {
+        ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
+      }
+      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
     }
     
   },
@@ -91,6 +160,7 @@ export default {
       console.log("我可以支持")
       this.initCanvas()
       this.initAvatar()
+      this.initArrow()
       window.onresize = () => {
         this.initCanvas()
       }
@@ -109,7 +179,10 @@ export default {
 
 <style lang="less" scoped>
 
-@side-length: calc(906 / 1671 * 0.45 * 100vh);
+@side-length: calc(0.25 * 100vh);
+@arrow-height: calc(0.07 * 100vh);
+@arrow-width: calc(149 / 123 * @arrow-height);
+@arrow-interval: calc(0.2 * 100vh);
 
 body {
   margin: 0px;
@@ -130,9 +203,19 @@ body {
   height: @side-length;
 }
 #left{
-  z-index: 10;
+  z-index: 20;
   position: absolute;
-  width: @side-length;
-  height: @side-length;
+  left: calc(50vw - @arrow-interval - @arrow-width * 0.54);
+  top: calc(50vh - @arrow-height * 0.54);
+  width: @arrow-width;
+  height: @arrow-height;
+}
+#right{
+  z-index: 20;
+  position: absolute;
+  right: calc(50vw - @arrow-interval - @arrow-width * 0.52);
+  top: calc(50vh - @arrow-height * 0.53);
+  width: @arrow-width;
+  height: @arrow-height;
 }
 </style>
