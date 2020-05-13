@@ -67,7 +67,6 @@ export default {
     initCanvas(){
       let canvas = document.getElementById('page')
       let ctx = canvas.getContext('2d')
-      
       // 画布高度
       let winH = window.innerHeight
       // 画布宽度
@@ -219,6 +218,7 @@ export default {
       this.initArrow()
       window.onresize = () => {
         this.initCanvas()
+        this.initAvatar()
       }
     } else {
       console.log("我不支持")
@@ -240,9 +240,7 @@ export default {
 @arrow-width: calc(149 / 123 * @arrow-height);
 @arrow-interval: calc(0.2 * 100vh);
 
-body {
-  margin: 0px;
-}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -253,7 +251,7 @@ body {
 #avatar{
   z-index: 10;
   position: absolute;
-  left: calc(50vw - @side-length * 0.53);
+  left: calc(50vw - @side-length * 0.50);
   top: calc(50vh - @side-length * 0.53);
   width: @side-length;
   height: @side-length;
@@ -269,8 +267,8 @@ body {
 #right{
   z-index: 20;
   position: absolute;
-  right: calc(50vw - @arrow-interval - @arrow-width * 0.52);
-  top: calc(50vh - @arrow-height * 0.53);
+  right: calc(50vw - @arrow-interval - @arrow-width * 0.50);
+  top: calc(50vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
 }
