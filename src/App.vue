@@ -67,12 +67,24 @@ export default {
     initCanvas(){
       let canvas = document.getElementById('page')
       let ctx = canvas.getContext('2d')
+      
       // 画布高度
       let winH = window.innerHeight
       // 画布宽度
       let winW = 906 / 1671 * winH > window.innerWidth ? window.innerWidth : 906 / 1671 * winH
       canvas.width = winW
       canvas.height = winH
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      ctx.scale(ratio, ratio); 
       // 装载图片
       let imgBackground = new Image()
       imgBackground.onload = () => {
@@ -86,6 +98,17 @@ export default {
       let sideLength = 0.25 * window.innerHeight
       canvas.width = sideLength
       canvas.height = sideLength
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      ctx.scale(ratio, ratio); 
       // 装载图片
       let imgAvatar = new Image()
       imgAvatar.onload = () => {
@@ -102,6 +125,17 @@ export default {
       let ctxLeft = canvasLeft.getContext('2d')
       canvasLeft.width = arrowWidth
       canvasLeft.height = arrowHeight
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctxLeft.webkitBackingStorePixelRatio || ctxLeft.mozBackingStorePixelRatio || ctxLeft.msBackingStorePixelRatio || ctxLeft.oBackingStorePixelRatio || ctxLeft.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvasLeft.width; 
+      let oldHeight = canvasLeft.height; 
+      canvasLeft.width = oldWidth * ratio; 
+      canvasLeft.height = oldHeight * ratio; 
+      canvasLeft.style.width = oldWidth + 'px'; 
+      canvasLeft.style.height = oldHeight + 'px'; 
+      ctxLeft.scale(ratio, ratio); 
       // 装载图片
       let imgLeft = new Image()
       imgLeft.onload = () => {
@@ -114,6 +148,17 @@ export default {
       let ctxRight = canvasRight.getContext('2d')
       canvasRight.width = arrowWidth
       canvasRight.height = arrowHeight
+      //解决一下清晰度
+      devicePixelRatio = window.devicePixelRatio || 1  
+      backingStoreRatio = ctxRight.webkitBackingStorePixelRatio || ctxRight.mozBackingStorePixelRatio || ctxRight.msBackingStorePixelRatio || ctxRight.oBackingStorePixelRatio || ctxRight.backingStorePixelRatio || 1
+      ratio = devicePixelRatio / backingStoreRatio
+      oldWidth = canvasRight.width; 
+      oldHeight = canvasRight.height; 
+      canvasRight.width = oldWidth * ratio; 
+      canvasRight.height = oldHeight * ratio; 
+      canvasRight.style.width = oldWidth + 'px'; 
+      canvasRight.style.height = oldHeight + 'px'; 
+      ctxRight.scale(ratio, ratio); 
       // 装载图片
       let imgRight = new Image()
       imgRight.onload = () => {
@@ -144,6 +189,17 @@ export default {
       let sideLength = 0.25 * window.innerHeight
       canvas.width = sideLength
       canvas.height = sideLength
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      ctx.scale(ratio, ratio); 
       // 装载图片
       let imgAvatar = new Image()
       imgAvatar.onload = () => {
