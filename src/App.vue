@@ -4,9 +4,8 @@
     <canvas id="avatar"></canvas>
     <canvas id="left" @click="changeLeft"></canvas>
     <canvas id="right" @click="changeRight"></canvas>
-    <!--
-    <button id="upload">上传图片</button>
-    -->
+    <button id="upload">上传头像</button>
+    <button id="download">下载头像</button>
   </div>
 </template>
 
@@ -70,7 +69,7 @@ export default {
       // 画布高度
       let winH = window.innerHeight
       // 画布宽度
-      let winW = 906 / 1671 * winH > window.innerWidth ? window.innerWidth : 906 / 1671 * winH
+      let winW = 906 / 1671 * winH 
       canvas.width = winW
       canvas.height = winH
       //解决一下清晰度
@@ -94,7 +93,7 @@ export default {
     initAvatar(){
       let canvas = document.getElementById('avatar')
       let ctx = canvas.getContext('2d')
-      let sideLength = 0.25 * window.innerHeight
+      let sideLength = 0.23 * window.innerHeight
       canvas.width = sideLength
       canvas.height = sideLength
       //解决一下清晰度
@@ -203,25 +202,33 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-@side-length: calc(0.25 * 100vh);
+@page-height: calc(100vh);
+@page-weight: calc( 906 / 1671 * @page-height ) ;
+@side-length: calc(0.23 * 100vh);
 @arrow-height: calc(0.05 * 100vh);
 @arrow-width: calc(149 / 123 * @arrow-height);
 @arrow-interval: calc(0.2 * 100vh);
-
+@button-height: calc(0.047 * 100vh);
+@button-width:  calc(290 /85 * @button-height);
+@button-interval: calc(0.11 * 100vh);
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   background-color: white;
+}
+#page {
+  z-index: -1;
+  position: absolute;
+  left: calc(50vw - @page-weight * 0.5);
+  top: 0px;
 }
 #avatar{
   z-index: 10;
   position: absolute;
-  left: calc(50vw - @side-length * 0.51);
-  top: calc(50vh - @side-length * 0.53);
+  left: calc(50vw - @side-length * 0.50);
+  top: calc(46vh - @side-length * 0.53);
   width: @side-length;
   height: @side-length;
 }
@@ -229,7 +236,7 @@ export default {
   z-index: 20;
   position: absolute;
   left: calc(50vw - @arrow-interval - @arrow-width * 0.5);
-  top: calc(50vh - @arrow-height * 0.54);
+  top: calc(46vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
 }
@@ -237,8 +244,39 @@ export default {
   z-index: 20;
   position: absolute;
   left: calc(50vw + @arrow-interval - @arrow-width * 0.5);
-  top: calc(50vh - @arrow-height * 0.54);
+  top: calc(46vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
 }
+#download{
+  z-index: 10;
+  position: absolute;
+  left: calc(50vw + @button-interval - @button-width * 0.5);
+  top: calc(63vh);
+  border-radius: 20px;
+  outline: none;
+  padding: 0px;
+  border: 0px;
+  background:url("./assets/anniversary-button.png") no-repeat;
+  background-size:100% 100%;
+  box-shadow: 1px -1px 2px 1px #a4a4a4;
+  width: @button-width;
+  height: @button-height;
+}
+#upload{
+  z-index: 10;
+  position: absolute;
+  left: calc(50vw - @button-interval - @button-width * 0.5);
+  top: calc(63vh);
+  border-radius: 20px;
+  outline: none;
+  padding: 0px;
+  border: 0px;
+  background:url("./assets/anniversary-button.png") no-repeat;
+  background-size:100% 100%;
+  box-shadow: 1px -1px 2px 1px #a4a4a4;
+  width: @button-width;
+  height: @button-height;
+}
+
 </style>
