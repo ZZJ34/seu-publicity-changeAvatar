@@ -113,10 +113,10 @@ export default {
       imgAvatar.onload = () => {
         ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
       }
-      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
+      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
     },
     initArrow(){
-      let arrowHeight = 0.07 * window.innerHeight
+      let arrowHeight = 0.05 * window.innerHeight
       let arrowWidth = 149 / 123 * arrowHeight
       
       // 左箭头
@@ -168,43 +168,11 @@ export default {
 
     changeLeft(){
       this.avatarCurrent = this.avatarCurrent - 1
-      let canvas = document.getElementById('avatar')
-      let ctx = canvas.getContext('2d')
-      let sideLength = 0.25 * window.innerHeight
-      canvas.width = sideLength
-      canvas.height = sideLength
-      // 装载图片
-      let imgAvatar = new Image()
-      imgAvatar.onload = () => {
-        ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
-      }
-      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
-
+      this.initAvatar()
     },
     changeRight(){
       this.avatarCurrent = this.avatarCurrent + 1
-      let canvas = document.getElementById('avatar')
-      let ctx = canvas.getContext('2d')
-      let sideLength = 0.25 * window.innerHeight
-      canvas.width = sideLength
-      canvas.height = sideLength
-      //解决一下清晰度
-      let devicePixelRatio = window.devicePixelRatio || 1  
-      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
-      let ratio = devicePixelRatio / backingStoreRatio
-      let oldWidth = canvas.width; 
-      let oldHeight = canvas.height; 
-      canvas.width = oldWidth * ratio; 
-      canvas.height = oldHeight * ratio; 
-      canvas.style.width = oldWidth + 'px'; 
-      canvas.style.height = oldHeight + 'px'; 
-      ctx.scale(ratio, ratio); 
-      // 装载图片
-      let imgAvatar = new Image()
-      imgAvatar.onload = () => {
-        ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
-      }
-      imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % 12)]
+      this.initAvatar()
     }
     
   },
@@ -219,6 +187,7 @@ export default {
       window.onresize = () => {
         this.initCanvas()
         this.initAvatar()
+        this.initArrow()
       }
     } else {
       console.log("我不支持")
@@ -236,7 +205,7 @@ export default {
 <style lang="less" scoped>
 
 @side-length: calc(0.25 * 100vh);
-@arrow-height: calc(0.07 * 100vh);
+@arrow-height: calc(0.05 * 100vh);
 @arrow-width: calc(149 / 123 * @arrow-height);
 @arrow-interval: calc(0.2 * 100vh);
 
@@ -251,7 +220,7 @@ export default {
 #avatar{
   z-index: 10;
   position: absolute;
-  left: calc(50vw - @side-length * 0.50);
+  left: calc(50vw - @side-length * 0.51);
   top: calc(50vh - @side-length * 0.53);
   width: @side-length;
   height: @side-length;
@@ -259,7 +228,7 @@ export default {
 #left{
   z-index: 20;
   position: absolute;
-  left: calc(50vw - @arrow-interval - @arrow-width * 0.54);
+  left: calc(50vw - @arrow-interval - @arrow-width * 0.5);
   top: calc(50vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
@@ -267,7 +236,7 @@ export default {
 #right{
   z-index: 20;
   position: absolute;
-  right: calc(50vw - @arrow-interval - @arrow-width * 0.50);
+  left: calc(50vw + @arrow-interval - @arrow-width * 0.5);
   top: calc(50vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
