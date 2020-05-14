@@ -1,11 +1,15 @@
 <template>
   <div id="app" @touchmove.prevent @mousewheel.prevent>
-    <canvas id="page"></canvas>
-    <canvas id="avatar"></canvas>
-    <canvas id="left" @click="changeLeft"></canvas>
-    <canvas id="right" @click="changeRight"></canvas>
-    <button id="upload">上传头像</button>
-    <button id="download">保存头像</button>
+    <div v-if="isSupportCanvas">
+      <canvas id="page"></canvas>
+      <canvas id="avatar"></canvas>
+      <canvas id="left" @click="changeLeft"></canvas>
+      <canvas id="right" @click="changeRight"></canvas>
+      <button id="upload">上传头像</button>
+      <button id="download">保存头像</button>
+    </div>
+    <div v-else>
+    </div>
   </div>
 </template>
 
@@ -263,7 +267,7 @@ export default {
   width: @button-width;
   height: @button-height;
   font-family: STFangsong;
-  font-size: 14px;
+  font-size: calc(0.022 * 100vh);
   &:active {
     color:white;
   }
@@ -283,7 +287,7 @@ export default {
   width: @button-width;
   height: @button-height;
   font-family: STFangsong;
-  font-size: 14px;
+  font-size: calc(0.022 * 100vh);;
   &:active {
     color:white;
   }
