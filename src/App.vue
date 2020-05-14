@@ -5,7 +5,7 @@
     <canvas id="left" @click="changeLeft"></canvas>
     <canvas id="right" @click="changeRight"></canvas>
     <button id="upload">上传头像</button>
-    <button id="download">下载头像</button>
+    <button id="download">保存头像</button>
   </div>
 </template>
 
@@ -213,7 +213,7 @@ export default {
 @button-interval: calc(0.11 * 100vh);
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif,FangSong;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: white;
@@ -262,6 +262,11 @@ export default {
   box-shadow: 1px -1px 2px 1px #a4a4a4;
   width: @button-width;
   height: @button-height;
+  font-family: STFangsong;
+  font-size: 14px;
+  &:active {
+    color:white;
+  }
 }
 #upload{
   z-index: 10;
@@ -277,6 +282,11 @@ export default {
   box-shadow: 1px -1px 2px 1px #a4a4a4;
   width: @button-width;
   height: @button-height;
+  font-family: STFangsong;
+  font-size: 14px;
+  &:active {
+    color:white;
+  }
 }
 
 </style>
