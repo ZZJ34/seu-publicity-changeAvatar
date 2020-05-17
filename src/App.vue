@@ -389,8 +389,12 @@ export default {
 @button-height: calc(0.045 * 100vh);
 @button-width:  calc(510 / 85 * @button-height);
 
+@font-face {
+	font-family:fs;
+	src: url('./assets/font/华文仿宋.ttf');
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif,FangSong;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: white;
@@ -447,7 +451,7 @@ export default {
   box-shadow: 1px -1px 2px 1px #a4a4a4;
   width: @button-width;
   height: @button-height;
-  font-family: STFangsong;
+  font-family: 'fs';
   font-size: calc(0.022 * 100vh);;
   &:active {
     color:white;
@@ -462,7 +466,7 @@ export default {
 }
 #tip{
   z-index: 10;
-  font-family: STFangsong;
+  font-family: 'fs';
   font-size: calc(0.022 * 100vh);
   position: absolute;
   left: calc(50vw - 6 * 0.022 * 100vh * 0.5);
