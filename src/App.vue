@@ -1,20 +1,25 @@
 <template>
   <div id="app" @touchmove.prevent @mousewheel.prevent>
-    <div v-if="isSupportCanvas">
+    <div v-if="isSupportCanvas && iswxConfig">
       <canvas id="page"></canvas>
-      <canvas id="avatar"></canvas>
+      <!--<canvas id="avatar"></canvas>-->
+      <img id="avatar" :src="avatarExtendBase64">
+      <img id="avatarPre" :src="avatarBase64">
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
-      <button id="upload">上传头像</button>
-      <button id="download">保存头像</button>
+      <button id="upload" @click="chooseImg">上传头像</button>
+      <button id="download"  @click="downloadImg">点击预览</button>
     </div>
-    <div v-else>
+    <div v-else id="empty">
+      <img style="width:200px" :src="emptyPlaceholder">
+      <p>我好像用不了啊～～～</p>
     </div>
   </div>
 </template>
 
 <script>
 import background from "./assets/anniversary-background.png"
+import emptyPlaceholder from "./assets/home-empty.png";
 import avatar1 from "./assets/1.png"
 // eslint-disable-next-line no-unused-vars
 import avatar2 from "./assets/2.png"
@@ -47,6 +52,7 @@ export default {
       background,
       arrowLeft,
       arrowRight,
+      emptyPlaceholder,
       avatarList:{
         0:avatar1,
         1:avatar2,
@@ -62,11 +68,16 @@ export default {
         11:avatar12
       },
       avatarTotal: 12,
-      avatarCurrent: 11,
+      avatarCurrent: 0,
       isSupportCanvas: true,
+      iswxConfig: true,
+      avatar: '',
+      avatarBase64: '',
+      avatarExtendBase64: ''
     }
   },
   methods:{
+    // 初始化背景画布
     initCanvas(){
       let canvas = document.getElementById('page')
       let ctx = canvas.getContext('2d')
@@ -94,6 +105,7 @@ export default {
       }
       imgBackground.src = this.background
     },
+    // 初始化头像装饰画布
     initAvatar(){
       let canvas = document.getElementById('avatar')
       let ctx = canvas.getContext('2d')
@@ -117,7 +129,15 @@ export default {
         ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
       }
       imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
+      if(this.avatarBase64 !== ''){
+        let img = new Image()
+        img.onload = () => {
+          ctx.drawImage(img,0,0,sideLength,sideLength)
+        }
+        img.src = this.avatarBase64
+      }
     },
+    // 初始化箭头画布
     initArrow(){
       let arrowHeight = 0.05 * window.innerHeight
       let arrowWidth = 149 / 123 * arrowHeight
@@ -168,14 +188,98 @@ export default {
       }
       imgRight.src = this.arrowRight
     },
+    // 初始化原始图像画布
+    initAvatarPre(){
+      let canvas = document.getElementById('avatarPre')
+      let ctx = canvas.getContext('2d')
+      let sideLength = 0.23 * window.innerHeight
+      canvas.width = sideLength
+      canvas.height = sideLength
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      ctx.scale(ratio, ratio); 
+      // 装载图片
+      let img = new Image()
+      img.onload = () => {
+        ctx.drawImage(img,0,0,sideLength,sideLength)
+      }
+      img.src = this.avatarBase64
+        
+    },
+    // 初始化头像装饰图片
+    initImg(){
+      this.avatarExtendBase64 = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
+    },
 
     changeLeft(){
+      // console.log(this.avatarCurrent)
+      // console.log(Math.abs(this.avatarCurrent % this.avatarTotal))
       this.avatarCurrent = this.avatarCurrent - 1
-      this.initAvatar()
+      // this.initAvatar()
+      this.initImg()
     },
     changeRight(){
+      // console.log(this.avatarCurrent)
+      // console.log(Math.abs(this.avatarCurrent % this.avatarTotal))
       this.avatarCurrent = this.avatarCurrent + 1
-      this.initAvatar()
+      // this.initAvatar()
+      this.initImg()
+    },
+
+
+    chooseImg(){
+      let that = this
+      window.wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          that.avatar = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          window.wx.getLocalImgData({
+            localId: that.avatar, // 图片的localID
+            success: function (res) {
+              that.avatarBase64 = res.localData // localData是图片的base64数据，可以用img标签显示s
+            }
+          })
+        }
+      })
+      
+      
+    },
+    downloadImg(){
+      let that = this
+      let canvas = document.createElement("canvas");
+      let sideLength = 0.23 * window.innerHeight
+      canvas.width = sideLength
+      canvas.height = sideLength
+      let context = canvas.getContext("2d");
+
+      let firstImage = new Image();
+      firstImage.src = this.avatarBase64;  
+      firstImage.crossOrigin = 'Anonymous';
+
+      firstImage.onload = function(){
+        context.drawImage(firstImage , 0 , 0 , sideLength , sideLength);
+
+        let secondImage = new Image();
+        secondImage.src = that.avatarList[Math.abs(that.avatarCurrent % that.avatarTotal)];   
+        secondImage.crossOrigin = 'Anonymous';
+        
+        secondImage.onload = function(){
+          context.drawImage(secondImage ,0 , 0 , sideLength , sideLength);
+          let base64 = canvas.toDataURL("image/png"); 
+          let img = document.getElementById('avatar');
+          img.setAttribute('src' , base64);
+        }
+    }
     }
     
   },
@@ -185,21 +289,48 @@ export default {
     if (canvas.getContext){
       console.log("我可以支持")
       this.initCanvas()
-      this.initAvatar()
+      // this.initAvatar()
+      this.initImg()
       this.initArrow()
       window.onresize = () => {
         this.initCanvas()
-        this.initAvatar()
+        // this.initAvatar()
+        this.initImg()
         this.initArrow()
       }
     } else {
       console.log("我不支持")
       this.isSupportCanvas = false
     }
+    this.isLoading = false
   },
   // 页面初始化
-  created(){
-
+  async created(){
+    //微信配置
+    const res = await this.$axios.post("https://xgbxscwx.seu.edu.cn/api/wxConfig",{
+      url: window.location.href
+    })
+    if (res.data.success) {
+      window.wx.config(res.data.result);
+      window.wx.ready(function() {
+        // 检测微信设备是否支持
+        window.wx.checkJsApi({
+        jsApiList: ['chooseImage','previewImage','uploadImage','downloadImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        success: function(res) {
+          // 以键值对的形式返回，可用的api值true，不可用为false
+          console.log(res.checkResult)
+          this.iswxConfig = 
+            res.checkResult.chooseImage && 
+            res.checkResult.previewImage &&
+            res.checkResult.uploadImage &&
+            res.checkResult.downloadImage
+          }
+        })
+      })
+    }
+    else {
+      this.iswxConfig = false
+    }
   }
   
 }
@@ -230,6 +361,14 @@ export default {
 }
 #avatar{
   z-index: 10;
+  position: absolute;
+  left: calc(50vw - @side-length * 0.50);
+  top: calc(46vh - @side-length * 0.53);
+  width: @side-length;
+  height: @side-length;
+}
+#avatarPre{
+  z-index: 9;
   position: absolute;
   left: calc(50vw - @side-length * 0.50);
   top: calc(46vh - @side-length * 0.53);
@@ -291,6 +430,13 @@ export default {
   &:active {
     color:white;
   }
+}
+#empty{
+  width:100%; 
+  display:flex; 
+  flex-direction:column;
+  align-items:center; 
+  justify-content:center;
 }
 
 </style>
