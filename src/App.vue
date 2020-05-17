@@ -255,9 +255,10 @@ export default {
                 that.avatar = res.localData 
                 that.avatarBase64 = res.localData
               }else{
-                that.avatarBase64 = res.localData
+                that.avatarBase64 = 'data:image/png;base64,' + res.localData
+               
               }
-              
+        
               //console.log(that.avatarBase64)
             }
           })
@@ -285,13 +286,16 @@ export default {
       canvas.style.width = oldWidth + 'px' 
       canvas.style.height = oldHeight + 'px' 
       context.scale(ratio, ratio)
+      
+
 
       let firstImage = new Image()
       firstImage.src = this.avatarBase64
+  
 
       firstImage.onload = function(){
         context.drawImage(firstImage , 0 , 0 , sideLength , sideLength)
-
+        
         let secondImage = new Image()
         secondImage.src = that.avatarExtend
         
@@ -332,7 +336,7 @@ export default {
   // 页面初始化
   async created(){
     // 微信配置
-    // console.log(window.navigator.userAgent)
+    console.log(window.navigator.userAgent)
     if(window.navigator.userAgent.indexOf('Android') !== -1){
       this.isAndriod = true
     }else{
