@@ -3,7 +3,7 @@
     <div v-if="isSupportCanvas && iswxConfig">
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
-      <img id="avatar" :src="avatarExtendBase64">
+      <img id="avatar" :src="avatarExtend">
       <img id="avatarPre" :src="avatar">
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
@@ -76,7 +76,7 @@ export default {
       iswxConfig: true,
       avatar: '',
       avatarBase64: '',
-      avatarExtendBase64: '',
+      avatarExtend: '',
       isAndriod: false,
       isiOS: false
     }
@@ -221,7 +221,7 @@ export default {
     },
     // 初始化头像装饰图片
     initImg(){
-      this.avatarExtendBase64 = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
+      this.avatarExtend = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
     },
 
     changeLeft(){
@@ -288,14 +288,12 @@ export default {
 
       let firstImage = new Image()
       firstImage.src = this.avatarBase64
-      firstImage.crossOrigin = 'Anonymous'
 
       firstImage.onload = function(){
         context.drawImage(firstImage , 0 , 0 , sideLength , sideLength)
 
         let secondImage = new Image()
-        secondImage.src = that.avatarList[Math.abs(that.avatarCurrent % that.avatarTotal)]
-        secondImage.crossOrigin = 'Anonymous'
+        secondImage.src = that.avatarBase64
         
         secondImage.onload = function(){
           context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
