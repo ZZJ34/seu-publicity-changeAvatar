@@ -4,7 +4,7 @@
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
       <img id="avatar" :src="avatarExtend">
-      <img id="avatarPre" :src="avatar">
+      <img v-if="avatar" id="avatarPre" :src="avatar" >
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
       <button id="upload" @click="chooseImg">上传头像</button>
