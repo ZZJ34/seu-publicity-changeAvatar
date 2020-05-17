@@ -7,10 +7,9 @@
       <img v-if="avatar" id="avatarPre" :src="avatar" >
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
-      <button id="upload" @click="chooseImg">上传头像</button>
-      <button id="download"  @click="downloadImg">预览</button>
+      <button id="upload" @click="chooseImg">{{ this.buttonTip}}</button>
       <div id="tip">
-        <p>点击预览后,长按头像保存</p>
+        <p>长按头像保存</p>
       </div>
     </div>
     <div v-else id="empty">
@@ -77,6 +76,7 @@ export default {
       avatar: '',
       avatarBase64: '',
       avatarExtend: '',
+      buttonTip:'上传头像',
       isAndriod: false,
       isiOS: false
     }
@@ -230,6 +230,7 @@ export default {
       this.avatarCurrent = this.avatarCurrent - 1
       // this.initAvatar()
       this.initImg()
+      this.mergeImg()
     },
     changeRight(){
       // console.log(this.avatarCurrent)
@@ -237,11 +238,14 @@ export default {
       this.avatarCurrent = this.avatarCurrent + 1
       // this.initAvatar()
       this.initImg()
+      this.mergeImg()
     },
 
 
     chooseImg(){
+      this.buttonTip = "上传中..."
       let that = this
+      // 选择头像
       window.wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -256,9 +260,10 @@ export default {
                 that.avatarBase64 = res.localData
               }else{
                 that.avatarBase64 = 'data:image/png;base64,' + res.localData
-               
               }
-        
+
+              that.buttonTip = '上传完成，点击重新上传'
+              that.mergeImg()
               //console.log(that.avatarBase64)
             }
           })
@@ -267,7 +272,8 @@ export default {
       
       
     },
-    downloadImg(){
+    // 头像和并
+    mergeImg(){
       let that = this
       let canvas = document.createElement("canvas");
       let sideLength = 0.23 * window.innerHeight
@@ -380,9 +386,8 @@ export default {
 @arrow-height: calc(0.05 * 100vh);
 @arrow-width: calc(149 / 123 * @arrow-height);
 @arrow-interval: calc(0.2 * 100vh);
-@button-height: calc(0.047 * 100vh);
-@button-width:  calc(290 /85 * @button-height);
-@button-interval: calc(0.11 * 100vh);
+@button-height: calc(0.045 * 100vh);
+@button-width:  calc(510 / 85 * @button-height);
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif,FangSong;
@@ -428,30 +433,10 @@ export default {
   width: @arrow-width;
   height: @arrow-height;
 }
-#download{
-  z-index: 10;
-  position: absolute;
-  left: calc(50vw + @button-interval - @button-width * 0.5);
-  top: calc(63vh);
-  border-radius: 20px;
-  outline: none;
-  padding: 0px;
-  border: 0px;
-  background:url("./assets/anniversary-button.png") no-repeat;
-  background-size:100% 100%;
-  box-shadow: 1px -1px 2px 1px #a4a4a4;
-  width: @button-width;
-  height: @button-height;
-  font-family: STFangsong;
-  font-size: calc(0.022 * 100vh);
-  &:active {
-    color:white;
-  }
-}
 #upload{
   z-index: 10;
   position: absolute;
-  left: calc(50vw - @button-interval - @button-width * 0.5);
+  left: calc(50vw - @button-width * 0.5);
   top: calc(63vh);
   border-radius: 20px;
   outline: none;
@@ -480,7 +465,7 @@ export default {
   font-family: STFangsong;
   font-size: calc(0.022 * 100vh);
   position: absolute;
-  left: calc(50vw - 11.21 * 0.022 * 100vh * 0.5);
+  left: calc(50vw - 6 * 0.022 * 100vh * 0.5);
   top: calc(56.5vh);
   
 }
