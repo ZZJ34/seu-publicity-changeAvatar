@@ -4,7 +4,7 @@
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
       <img id="avatar" :src="avatarExtendBase64">
-      <img id="avatarPre" :src="avatarBase64">
+      <img id="avatarPre" :src="avatar">
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
       <button id="upload" @click="chooseImg">上传头像</button>
@@ -75,8 +75,9 @@ export default {
       isSupportCanvas: true,
       iswxConfig: true,
       avatar: '',
-      avatarBase64: '',
-      avatarExtendBase64: ''
+      avatarExtendBase64: '',
+      isAndriod: false,
+      isiOS: false
     }
   },
   methods:{
@@ -132,12 +133,12 @@ export default {
         ctx.drawImage(imgAvatar,0,0,sideLength,sideLength)
       }
       imgAvatar.src = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
-      if(this.avatarBase64 !== ''){
+      if(this.avatar !== ''){
         let img = new Image()
         img.onload = () => {
           ctx.drawImage(img,0,0,sideLength,sideLength)
         }
-        img.src = this.avatarBase64
+        img.src = this.avatar
       }
     },
     // 初始化箭头画布
@@ -191,7 +192,7 @@ export default {
       }
       imgRight.src = this.arrowRight
     },
-    // 初始化原始图像画布
+    // 初始化原始头像画布
     initAvatarPre(){
       let canvas = document.getElementById('avatarPre')
       let ctx = canvas.getContext('2d')
@@ -214,7 +215,7 @@ export default {
       img.onload = () => {
         ctx.drawImage(img,0,0,sideLength,sideLength)
       }
-      img.src = this.avatarBase64
+      img.src = this.avatar
         
     },
     // 初始化头像装饰图片
@@ -246,13 +247,15 @@ export default {
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           that.avatar = res.localIds[0] // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          window.wx.getLocalImgData({
+          if(that.isiOS){
+            window.wx.getLocalImgData({
             localId: that.avatar, // 图片的localID
             success: function (res) {
-              that.avatarBase64 = res.localData // localData是图片的base64数据，可以用img标签显示
+              that.avatar = res.localData // localData是图片的base64数据，可以用img标签显示
               //console.log(that.avatarBase64)
             }
           })
+          }
         }
       })
       
@@ -279,7 +282,7 @@ export default {
       context.scale(ratio, ratio)
 
       let firstImage = new Image()
-      firstImage.src = this.avatarBase64
+      firstImage.src = this.avatar
       firstImage.crossOrigin = 'Anonymous'
 
       firstImage.onload = function(){
@@ -329,7 +332,15 @@ export default {
   },
   // 页面初始化
   async created(){
-    //微信配置
+    // 微信配置
+    // console.log(window.navigator.userAgent)
+    if(window.navigator.userAgent.indexOf('Android') !== -1){
+      this.isAndriod = true
+    }else{
+      this.isiOS = true
+    }
+    console.log(this.isAndriod)
+    console.log(this.isiOS)
     const res = await this.$axios.post("https://xgbxscwx.seu.edu.cn/api/wxConfig",{
       url: window.location.href
     })
