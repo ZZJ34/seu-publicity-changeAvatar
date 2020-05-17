@@ -75,6 +75,7 @@ export default {
       isSupportCanvas: true,
       iswxConfig: true,
       avatar: '',
+      avatarBase64: '',
       avatarExtendBase64: '',
       isAndriod: false,
       isiOS: false
@@ -247,15 +248,19 @@ export default {
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           that.avatar = res.localIds[0] // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          if(that.isiOS){
-            window.wx.getLocalImgData({
+          window.wx.getLocalImgData({
             localId: that.avatar, // 图片的localID
             success: function (res) {
-              that.avatar = res.localData // localData是图片的base64数据，可以用img标签显示
+              if(that.isiOS){
+                that.avatar = res.localData 
+                that.avatarBase64 = res.localData
+              }else{
+                that.avatarBase64 = res.localData
+              }
+              
               //console.log(that.avatarBase64)
             }
           })
-          }
         }
       })
       
@@ -282,7 +287,7 @@ export default {
       context.scale(ratio, ratio)
 
       let firstImage = new Image()
-      firstImage.src = this.avatar
+      firstImage.src = this.avatarBase64
       firstImage.crossOrigin = 'Anonymous'
 
       firstImage.onload = function(){
