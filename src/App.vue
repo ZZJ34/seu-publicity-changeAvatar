@@ -293,7 +293,7 @@ export default {
         context.drawImage(firstImage , 0 , 0 , sideLength , sideLength)
 
         let secondImage = new Image()
-        secondImage.src = that.avatarBase64
+        secondImage.src = that.avatarExtend
         
         secondImage.onload = function(){
           context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
