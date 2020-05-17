@@ -119,12 +119,12 @@ export default {
       let devicePixelRatio = window.devicePixelRatio || 1  
       let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
       let ratio = devicePixelRatio / backingStoreRatio
-      let oldWidth = canvas.width; 
-      let oldHeight = canvas.height; 
-      canvas.width = oldWidth * ratio; 
-      canvas.height = oldHeight * ratio; 
-      canvas.style.width = oldWidth + 'px'; 
-      canvas.style.height = oldHeight + 'px'; 
+      let oldWidth = canvas.width 
+      let oldHeight = canvas.height
+      canvas.width = oldWidth * ratio 
+      canvas.height = oldHeight * ratio 
+      canvas.style.width = oldWidth + 'px' 
+      canvas.style.height = oldHeight + 'px' 
       ctx.scale(ratio, ratio); 
       // 装载图片
       let imgAvatar = new Image()
@@ -154,13 +154,13 @@ export default {
       let devicePixelRatio = window.devicePixelRatio || 1  
       let backingStoreRatio = ctxLeft.webkitBackingStorePixelRatio || ctxLeft.mozBackingStorePixelRatio || ctxLeft.msBackingStorePixelRatio || ctxLeft.oBackingStorePixelRatio || ctxLeft.backingStorePixelRatio || 1
       let ratio = devicePixelRatio / backingStoreRatio
-      let oldWidth = canvasLeft.width; 
-      let oldHeight = canvasLeft.height; 
-      canvasLeft.width = oldWidth * ratio; 
-      canvasLeft.height = oldHeight * ratio; 
-      canvasLeft.style.width = oldWidth + 'px'; 
-      canvasLeft.style.height = oldHeight + 'px'; 
-      ctxLeft.scale(ratio, ratio); 
+      let oldWidth = canvasLeft.width 
+      let oldHeight = canvasLeft.height
+      canvasLeft.width = oldWidth * ratio
+      canvasLeft.height = oldHeight * ratio
+      canvasLeft.style.width = oldWidth + 'px'
+      canvasLeft.style.height = oldHeight + 'px'
+      ctxLeft.scale(ratio, ratio)
       // 装载图片
       let imgLeft = new Image()
       imgLeft.onload = () => {
@@ -245,7 +245,7 @@ export default {
         sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
-          that.avatar = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          that.avatar = res.localIds[0] // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           window.wx.getLocalImgData({
             localId: that.avatar, // 图片的localID
             success: function (res) {
@@ -270,30 +270,30 @@ export default {
       let devicePixelRatio = window.devicePixelRatio || 1  
       let backingStoreRatio = context.webkitBackingStorePixelRatio || context.mozBackingStorePixelRatio || context.msBackingStorePixelRatio || context.oBackingStorePixelRatio || context.backingStorePixelRatio || 1
       let ratio = devicePixelRatio / backingStoreRatio
-      let oldWidth = canvas.width; 
-      let oldHeight = canvas.height; 
-      canvas.width = oldWidth * ratio; 
-      canvas.height = oldHeight * ratio; 
-      canvas.style.width = oldWidth + 'px'; 
-      canvas.style.height = oldHeight + 'px'; 
-      context.scale(ratio, ratio); 
+      let oldWidth = canvas.width
+      let oldHeight = canvas.height 
+      canvas.width = oldWidth * ratio
+      canvas.height = oldHeight * ratio 
+      canvas.style.width = oldWidth + 'px' 
+      canvas.style.height = oldHeight + 'px' 
+      context.scale(ratio, ratio)
 
-      let firstImage = new Image();
-      firstImage.src = this.avatarBase64;  
-      firstImage.crossOrigin = 'Anonymous';
+      let firstImage = new Image()
+      firstImage.src = this.avatarBase64
+      firstImage.crossOrigin = 'Anonymous'
 
       firstImage.onload = function(){
-        context.drawImage(firstImage , 0 , 0 , sideLength , sideLength);
+        context.drawImage(firstImage , 0 , 0 , sideLength , sideLength)
 
-        let secondImage = new Image();
-        secondImage.src = that.avatarList[Math.abs(that.avatarCurrent % that.avatarTotal)];   
-        secondImage.crossOrigin = 'Anonymous';
+        let secondImage = new Image()
+        secondImage.src = that.avatarList[Math.abs(that.avatarCurrent % that.avatarTotal)]
+        secondImage.crossOrigin = 'Anonymous'
         
         secondImage.onload = function(){
-          context.drawImage(secondImage ,0 , 0 , sideLength , sideLength);
-          let base64 = canvas.toDataURL("image/png"); 
-          let img = document.getElementById('avatar');
-          img.setAttribute('src' , base64);
+          context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
+          let base64 = canvas.toDataURL("image/png")
+          let img = document.getElementById('avatar')
+          img.setAttribute('src' , base64)
         }
     }
     }
