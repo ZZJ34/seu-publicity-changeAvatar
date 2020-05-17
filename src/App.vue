@@ -250,7 +250,7 @@ export default {
             localId: that.avatar, // 图片的localID
             success: function (res) {
               that.avatarBase64 = res.localData // localData是图片的base64数据，可以用img标签显示
-              console.log(that.avatarBase64)
+              //console.log(that.avatarBase64)
             }
           })
         }
@@ -292,10 +292,17 @@ export default {
         secondImage.onload = function(){
           context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
           let base64 = canvas.toDataURL("image/png")
+          console.log(base64)
           let img = document.getElementById('avatar')
           img.setAttribute('src' , base64)
+          window.wx.previewImage({
+            current: base64, // 当前显示图片的http链接
+            urls: [base64] // 需要预览的图片http链接列表
+          })
         }
-    }
+      }
+
+
     }
     
   },
