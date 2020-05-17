@@ -8,7 +8,10 @@
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
       <button id="upload" @click="chooseImg">上传头像</button>
-      <button id="download"  @click="downloadImg">点击预览</button>
+      <button id="download"  @click="downloadImg">预览</button>
+      <div id="tip">
+        <p>点击预览后,长按头像保存</p>
+      </div>
     </div>
     <div v-else id="empty">
       <img style="width:200px" :src="emptyPlaceholder">
@@ -246,7 +249,8 @@ export default {
           window.wx.getLocalImgData({
             localId: that.avatar, // 图片的localID
             success: function (res) {
-              that.avatarBase64 = res.localData // localData是图片的base64数据，可以用img标签显示s
+              that.avatarBase64 = res.localData // localData是图片的base64数据，可以用img标签显示
+              console.log(that.avatarBase64)
             }
           })
         }
@@ -261,6 +265,18 @@ export default {
       canvas.width = sideLength
       canvas.height = sideLength
       let context = canvas.getContext("2d");
+
+       //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = context.webkitBackingStorePixelRatio || context.mozBackingStorePixelRatio || context.msBackingStorePixelRatio || context.oBackingStorePixelRatio || context.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      context.scale(ratio, ratio); 
 
       let firstImage = new Image();
       firstImage.src = this.avatarBase64;  
@@ -437,6 +453,15 @@ export default {
   flex-direction:column;
   align-items:center; 
   justify-content:center;
+}
+#tip{
+  z-index: 10;
+  font-family: STFangsong;
+  font-size: calc(0.022 * 100vh);
+  position: absolute;
+  left: calc(50vw - 11.21 * 0.022 * 100vh * 0.5);
+  top: calc(56.5vh);
+  
 }
 
 </style>
