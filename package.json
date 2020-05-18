@@ -1,10 +1,10 @@
 {
-  "name": "hello-world",
+  "name": "seu-avatart",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build ./public/index.html --public-url //cdn.xgbxscwx.myseu.cn/avatar/",
+    "build": "vue-cli-service build --public-url //cdn.xgbxscwx.myseu.cn/avatar/",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
