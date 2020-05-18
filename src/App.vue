@@ -297,6 +297,7 @@ export default {
 
       let firstImage = new Image()
       firstImage.src = this.avatarBase64
+      firstImage.crossOrigin = 'anonymous'
   
 
       firstImage.onload = function(){
@@ -304,6 +305,7 @@ export default {
         
         let secondImage = new Image()
         secondImage.src = that.avatarExtend
+        secondImage.crossOrigin = 'anonymous'
         
         secondImage.onload = function(){
           context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
