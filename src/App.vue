@@ -7,7 +7,7 @@
       <img v-if="avatar" id="avatarPre" :src="avatar" >
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
-      <button id="upload" @click="chooseImg">{{ this.buttonTip}}</button>
+      <button id="upload" @click="chooseImg">{{ this.buttonTip }}</button>
       <div id="tip">
         <p>长按头像保存</p>
       </div>
