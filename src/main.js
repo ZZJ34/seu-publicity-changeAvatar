@@ -4,6 +4,8 @@ import axios from './plugins/axios'
 
 Vue.config.productionTip = false
 
+window.__version__ = 3
+
 Vue.use(axios)
 
 new Vue({
