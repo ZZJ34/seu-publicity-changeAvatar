@@ -3,8 +3,8 @@
     <div v-if="isSupportCanvas && iswxConfig">
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
-      <img id="avatar" :src="avatarExtend">
-      <img v-if="avatar" id="avatarPre" :src="avatar" >
+      <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
+      <img v-if="avatar" id="avatarPre" :src="avatar" crossorigin='anonymous'>
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
       <button id="upload" @click="chooseImg">{{ this.buttonTip }}</button>
