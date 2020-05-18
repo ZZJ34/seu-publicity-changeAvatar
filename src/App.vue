@@ -312,7 +312,7 @@ export default {
           let base64 = canvas.toDataURL("image/png")
           let img = document.getElementById('avatar')
           img.setAttribute('src' , base64)
-          img.crossOrigin = 'anonymous'
+          img.setAttribute('crossOrigin','anonymous');
 
         }
       }
