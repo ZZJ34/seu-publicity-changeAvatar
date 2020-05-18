@@ -342,7 +342,7 @@ export default {
   // 页面初始化
   async created(){
     // 微信配置
-    console.log(window.navigator.userAgent)
+    // console.log(window.navigator.userAgent)
     if(window.navigator.userAgent.indexOf('Android') !== -1){
       this.isAndriod = true
     }else{
