@@ -348,8 +348,6 @@ export default {
     }else{
       this.isiOS = true
     }
-    console.log(this.isAndriod)
-    console.log(this.isiOS)
     const res = await this.$axios.post("https://xgbxscwx.seu.edu.cn/api/wxConfig",{
       url: window.location.href
     })
@@ -358,10 +356,9 @@ export default {
       window.wx.ready(function() {
         // 检测微信设备是否支持
         window.wx.checkJsApi({
-        jsApiList: ['chooseImage','previewImage','uploadImage','downloadImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
         success: function(res) {
           // 以键值对的形式返回，可用的api值true，不可用为false
-          console.log(res.checkResult)
           this.iswxConfig = 
             res.checkResult.chooseImage && 
             res.checkResult.previewImage &&
