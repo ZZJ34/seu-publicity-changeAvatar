@@ -4,7 +4,7 @@
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
       <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
-      <img v-if="avatar" id="avatarPre" :src="avatar" crossorigin='anonymous'>
+      <img v-if="avatar" id="avatarPre" :src="avatar" >
       <canvas id="left" @click="changeLeft"></canvas>
       <canvas id="right" @click="changeRight"></canvas>
       <button id="upload" @click="chooseImg">{{ this.buttonTip }}</button>
@@ -145,7 +145,7 @@ export default {
     // 初始化箭头画布
     initArrow(){
       let arrowHeight = 0.05 * window.innerHeight
-      let arrowWidth = 149 / 123 * arrowHeight
+      let arrowWidth = arrowHeight
       
       // 左箭头
       let canvasLeft = document.getElementById('left')
@@ -380,7 +380,7 @@ export default {
 @page-weight: calc( 906 / 1671 * @page-height ) ;
 @side-length: calc(0.23 * 100vh);
 @arrow-height: calc(0.05 * 100vh);
-@arrow-width: calc(149 / 123 * @arrow-height);
+@arrow-width: calc( @arrow-height);
 @arrow-interval: calc(0.2 * 100vh);
 @button-height: calc(0.045 * 100vh);
 @button-width:  calc(510 / 85 * @button-height);
