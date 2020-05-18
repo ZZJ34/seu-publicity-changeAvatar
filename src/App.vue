@@ -359,11 +359,7 @@ export default {
         jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
         success: function(res) {
           // 以键值对的形式返回，可用的api值true，不可用为false
-          this.iswxConfig = 
-            res.checkResult.chooseImage && 
-            res.checkResult.previewImage &&
-            res.checkResult.uploadImage &&
-            res.checkResult.downloadImage
+          this.iswxConfig = res.checkResult.chooseImage 
           }
         })
       })
