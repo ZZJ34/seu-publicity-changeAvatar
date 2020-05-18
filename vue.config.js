@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath:  '',
+  publicPath:  process.env.NODE_ENV === 'production'
+  ? 'https://cdn.xgbxscwx.myseu.cn/avatar/'
+  : '',
 }
