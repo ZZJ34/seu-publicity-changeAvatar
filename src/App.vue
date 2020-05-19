@@ -56,7 +56,7 @@ export default {
       arrowRight,
       emptyPlaceholder,
       avatarList:{
-        0:avatar1,
+        0:avatar12,
         1:avatar2,
         2:avatar3,
         3:avatar4,
@@ -67,7 +67,7 @@ export default {
         8:avatar9,
         9:avatar10,
         10:avatar11,
-        11:avatar12
+        11:avatar1
       },
       avatarTotal: 12,
       avatarCurrent: 0,
