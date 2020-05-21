@@ -351,27 +351,7 @@ export default {
     }else{
       this.isiOS = true
     }
-    const res = await this.$axios.post("https://xgbxscwx.seu.edu.cn/api/wxConfig",{
-      url: window.location.href
-    })
-    if (res.data.success) {
-      window.wx.config(res.data.result);
-      window.wx.ready(function() {
-        window.wx.hideAllNonBaseMenuItem()
-        // // 检测微信设备是否支持
-        // window.wx.checkJsApi({
-        // jsApiList: ['chooseImage'], // 需要检测的JS接口列表
-        // success: function(res) {
-        //   // 以键值对的形式返回，可用的api值true，不可用为false
-        //   this.iswxConfig = res.checkResult.chooseImage 
-          
-        //   }
-        // })
-      })
-    }
-    else {
-      this.iswxConfig = false
-    }
+    
   }
   
 }
