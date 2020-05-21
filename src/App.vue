@@ -1,6 +1,6 @@
 <template>
   <div id="app" @touchmove.prevent @mousewheel.prevent>
-    <div v-if="isSupportCanvas && iswxConfig">
+    <div v-if="isSupportCanvas && iswxConfig" v->
       <canvas id="page"></canvas>
       <!--<canvas id="avatar"></canvas>-->
       <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
@@ -341,8 +341,11 @@ export default {
       this.isSupportCanvas = false
     }
     
-    let image = new Image();
-    image.src = this.avatarList[1]
+    
+    for(let i = 0 ; i < this.avatarTotal ; i++){
+      let image = new Image();
+      image.src = this.avatarList[i]
+    }
 
     
   },
