@@ -345,6 +345,9 @@ export default {
     for(let i = 0 ; i < this.avatarTotal ; i++){
       let image = new Image();
       image.src = this.avatarList[i]
+      image.onload = () =>{
+        
+      }
     }
 
     
