@@ -26,5 +26,4 @@ else if(window.location.href.startsWith('https://seicwxbz.seu.edu.cn/')){
 }
 
 window.wx.ready(function(){
-  window.wx.hideAllNonBaseMenuItem()
 })
