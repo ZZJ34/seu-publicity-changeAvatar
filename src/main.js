@@ -20,7 +20,7 @@ if(window.location.href.startsWith('https://xgbxscwx.seu.edu.cn/')){
   })
 }
 else if(window.location.href.startsWith('https://seicwxbz.seu.edu.cn/')){
-  window.$axios.get("https://seicwxbz.seu.edu.cn/api/jssdk?extraUrl=https://seicwxbz.seu.edu.cn/").then((wxConfig) => {
+  window.$axios.get("https://seicwxbz.seu.edu.cn/api/jssdk?extraUrl=https://xgbxscwx.seu.edu.cn/avatar/").then((wxConfig) => {
     window.wx.config(wxConfig.data.result)
   })
 }
