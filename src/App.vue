@@ -357,6 +357,7 @@ export default {
     if (res.data.success) {
       window.wx.config(res.data.result);
       window.wx.ready(function() {
+        window.wx.hideAllNonBaseMenuItem();
         // 检测微信设备是否支持
         window.wx.checkJsApi({
         jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
