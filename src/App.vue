@@ -345,7 +345,7 @@ export default {
   // 页面初始化
   async created(){
     // 微信配置
-    console.log(window.navigator.userAgent)
+    // console.log(window.navigator.userAgent)
     if(window.navigator.userAgent.indexOf('Android') !== -1){
       this.isAndriod = true
     }else{
@@ -357,15 +357,16 @@ export default {
     if (res.data.success) {
       window.wx.config(res.data.result);
       window.wx.ready(function() {
-        // 检测微信设备是否支持
-        window.wx.checkJsApi({
-        jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-        success: function(res) {
-          // 以键值对的形式返回，可用的api值true，不可用为false
-          this.iswxConfig = res.checkResult.chooseImage 
-          window.wx.hideAllNonBaseMenuItem()
-          }
-        })
+        window.wx.hideAllNonBaseMenuItem()
+        // // 检测微信设备是否支持
+        // window.wx.checkJsApi({
+        // jsApiList: ['chooseImage'], // 需要检测的JS接口列表
+        // success: function(res) {
+        //   // 以键值对的形式返回，可用的api值true，不可用为false
+        //   this.iswxConfig = res.checkResult.chooseImage 
+          
+        //   }
+        // })
       })
     }
     else {
