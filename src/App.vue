@@ -340,7 +340,11 @@ export default {
       console.log("我不支持")
       this.isSupportCanvas = false
     }
-    this.isLoading = false
+    
+    let image = new Image();
+    image.src = this.avatarList[1]
+
+    
   },
   // 页面初始化
   async created(){
