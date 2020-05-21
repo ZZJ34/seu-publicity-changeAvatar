@@ -363,7 +363,7 @@ export default {
         success: function(res) {
           // 以键值对的形式返回，可用的api值true，不可用为false
           this.iswxConfig = res.checkResult.chooseImage 
-          window.wx.hideAllNonBaseMenuItem();
+          window.wx.hideAllNonBaseMenuItem()
           }
         })
       })
