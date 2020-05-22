@@ -25,7 +25,7 @@ if(window.location.href.startsWith('https://xgbxscwx.seu.edu.cn/')){
 }
 // 请求网信的后端
 else if(window.location.href.startsWith('https://seicwxbz.seu.edu.cn/')){
-  window.$axios.get("https://seicwxbz.seu.edu.cn/api/jssdk?extraUrl=https://seicwxbz.seu.edu.cn/avatar/").then((wxConfig) => {
+  window.$axios.get(`https://seicwxbz.seu.edu.cn/api/jssdk?extraUrl=${window.location.href}`).then((wxConfig) => {
     window.wx.config(wxConfig.data.result)
   })
 }
