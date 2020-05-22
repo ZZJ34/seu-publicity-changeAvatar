@@ -19,9 +19,8 @@
       </div>
     </div>
     <div id='loading' style="text-align: center;">
-      <div>
-        <h1><strong>Loading...</strong></h1>
-        <h2><strong>{{ percent }}</strong></h2>
+      <div id='percentTip'>
+        <div id = 'percent'>{{ percent }}</div>
       </div>
     </div>
   </div>
@@ -359,6 +358,9 @@ export default {
       image.onload = () =>{
         this.count++
         this.percent = `${Math.floor(this.count / 12 * 100)}%`
+        document.getElementById("percent").style.background=`linear-gradient(to top, #f6ab00 ${this.percent}, white ${this.percent})`
+        document.getElementById("percent").style.WebkitBackgroundClip='text'
+        document.getElementById("percent").style.color='transparent'
       }
     }
 
@@ -461,7 +463,7 @@ export default {
   width: @button-width;
   height: @button-height;
   font-family: 'fs';
-  font-size: calc(0.022 * 100vh);;
+  font-size: calc(0.022 * 100vh);
   &:active {
     color:white;
   }
@@ -481,6 +483,21 @@ export default {
   left: calc(50vw - 6 * 0.022 * 100vh * 0.5);
   top: calc(56.5vh);
   
+}
+#percentTip{
+  height: calc(100vh);
+  display: flex;
+  flex-direction: column;
+  justify-content:  center;
+  font-size: calc(0.037 * 100vh);
+  font-style: italic;
+  div {
+    background: linear-gradient(to top, #f6ab00 10%, white 10%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+  }
 }
 
 </style>
