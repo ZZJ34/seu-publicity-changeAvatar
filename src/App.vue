@@ -367,11 +367,13 @@ export default {
     
   },
   watch: {
-    count: function(val) {
+    count: async(val) => {
       // console.log(val)
       if (val === 12) {
-        document.getElementById("loading").style.display="none"
-        document.getElementById("main").style.display="inline"
+        setTimeout(() =>{
+          document.getElementById("loading").style.display="none"
+          document.getElementById("main").style.display="inline"
+        },300);
       }
     }
   },
