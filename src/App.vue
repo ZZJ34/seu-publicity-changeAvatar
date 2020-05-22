@@ -1,20 +1,28 @@
 <template>
   <div id="app" @touchmove.prevent @mousewheel.prevent>
-    <div v-if="isSupportCanvas && iswxConfig" v->
-      <canvas id="page"></canvas>
-      <!--<canvas id="avatar"></canvas>-->
-      <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
-      <img v-if="avatar" id="avatarPre" :src="avatar" >
-      <canvas id="left" @click="changeLeft"></canvas>
-      <canvas id="right" @click="changeRight"></canvas>
-      <button id="upload" @click="chooseImg">{{ this.buttonTip }}</button>
-      <div id="tip">
-        <p>长按头像保存</p>
+    <div id='main'>
+      <div v-if="isSupportCanvas && iswxConfig" >
+        <canvas id="page"></canvas>
+        <!--<canvas id="avatar"></canvas>-->
+        <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
+        <img v-if="avatar" id="avatarPre" :src="avatar" >
+        <canvas id="left" @click="changeLeft"></canvas>
+        <canvas id="right" @click="changeRight"></canvas>
+        <button id="upload" @click="chooseImg">{{ this.buttonTip }}</button>
+        <div id="tip">
+          <p>长按头像保存</p>
+        </div>
+      </div>
+      <div v-else id="empty">
+        <img style="width:200px" :src="emptyPlaceholder">
+        <p>我好像用不了啊～～～</p>
       </div>
     </div>
-    <div v-else id="empty">
-      <img style="width:200px" :src="emptyPlaceholder">
-      <p>我好像用不了啊～～～</p>
+    <div id='loading' style="text-align: center;">
+      <div>
+        <h1><strong>Loading...</strong></h1>
+        <h2><strong>{{ percent }}</strong></h2>
+      </div>
     </div>
   </div>
 </template>
@@ -78,7 +86,9 @@ export default {
       avatarExtend: '',
       buttonTip:'上传头像',
       isAndriod: false,
-      isiOS: false
+      isiOS: false,
+      count: 0,
+      percent: '0%'
     }
   },
   methods:{
@@ -323,6 +333,7 @@ export default {
   },
   // canves 的初始化
   mounted(){
+    document.getElementById("main").style.display="none"
     let canvas = document.getElementById('page')
     if (canvas.getContext){
       console.log("我可以支持")
@@ -346,11 +357,21 @@ export default {
       let image = new Image();
       image.src = this.avatarList[i]
       image.onload = () =>{
-        
+        this.count++
+        this.percent = `${Math.floor(this.count / 12 * 100)}%`
       }
     }
 
     
+  },
+  watch: {
+    count: function(val) {
+      // console.log(val)
+      if (val === 12) {
+        document.getElementById("loading").style.display="none"
+        document.getElementById("main").style.display="inline"
+      }
+    }
   },
   // 页面初始化
   async created(){
