@@ -257,7 +257,7 @@ export default {
       // 选择头像
       window.wx.chooseImage({
         count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           that.avatar = res.localIds[0] // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
@@ -300,7 +300,7 @@ export default {
       canvas.height = oldHeight * ratio 
       canvas.style.width = oldWidth + 'px' 
       canvas.style.height = oldHeight + 'px' 
-      context.scale(ratio, ratio)
+      //context.scale(ratio, ratio)
       
 
 
@@ -310,14 +310,16 @@ export default {
   
 
       firstImage.onload = function(){
-        context.drawImage(firstImage , 0 , 0 , sideLength , sideLength)
+        context.drawImage(firstImage , 0 , 0 , ratio*sideLength , ratio * sideLength)
+        
         
         let secondImage = new Image()
         secondImage.src = that.avatarExtend
         secondImage.crossOrigin = 'anonymous'
         
         secondImage.onload = function(){
-          context.drawImage(secondImage ,0 , 0 , sideLength , sideLength)
+          context.drawImage(secondImage ,0 , 0 , ratio*sideLength ,  ratio*sideLength)
+          
           let base64 = canvas.toDataURL("image/png")
           let img = document.getElementById('avatar')
           img.setAttribute('src' , base64)
