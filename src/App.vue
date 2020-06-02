@@ -56,6 +56,8 @@ import avatar11 from "./assets/y11.png"
 import avatar12 from "./assets/y12.png"
 // eslint-disable-next-line no-unused-vars
 import avatar13 from "./assets/y13.png"
+// eslint-disable-next-line no-unused-vars
+import avatar14 from "./assets/y14.png"
 import arrowLeft from "./assets/anniversary-left.png"
 import arrowRight from "./assets/anniversary-right.png"
 export default {
@@ -80,9 +82,8 @@ export default {
         9:avatar10,
         10:avatar11,
         11:avatar12,
-        12:avatar13,
       },
-      avatarTotal: 13,
+      avatarTotal: 12,
       avatarCurrent: 0,
       isSupportCanvas: true,
       iswxConfig: true,
@@ -413,7 +414,7 @@ export default {
     count: async(val) => {
       // 根据实际的头像挂饰数量修改
       
-      if (val === 13) {
+      if (val === 12) {
         setTimeout(() =>{
           document.getElementById("loading").style.display="none"
           document.getElementById("main").style.display="inline"
