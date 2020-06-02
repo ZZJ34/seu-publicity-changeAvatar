@@ -533,7 +533,7 @@ export default {
   font-size: calc(0.022 * 100vh);
   position: absolute;
   left: calc(50vw - 6 * 0.022 * 100vh * 0.5);
-  top: calc(50.5vh);
+  top: calc(59.5vh);
   
 }
 #percentTip{
