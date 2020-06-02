@@ -29,15 +29,15 @@
 <script>
 import background from "./assets/anniversary-background.png"
 import emptyPlaceholder from "./assets/home-empty.png";
-import avatar1 from "./assets/1.png"
+import avatar1 from "./assets/y1.png"
 // eslint-disable-next-line no-unused-vars
-import avatar2 from "./assets/2.png"
+import avatar2 from "./assets/y2.png"
 // eslint-disable-next-line no-unused-vars
-import avatar3 from "./assets/3.png"
+import avatar3 from "./assets/y3.png"
 // eslint-disable-next-line no-unused-vars
-import avatar4 from "./assets/4.png"
+import avatar4 from "./assets/y4.png"
 // eslint-disable-next-line no-unused-vars
-import avatar5 from "./assets/5.png"
+import avatar5 from "./assets/y5.png"
 // eslint-disable-next-line no-unused-vars
 import avatar6 from "./assets/6.png"
 // eslint-disable-next-line no-unused-vars
@@ -63,20 +63,20 @@ export default {
       arrowRight,
       emptyPlaceholder,
       avatarList:{
-        0:avatar7,
-        1:avatar12,
-        2:avatar2,
-        3:avatar3,
-        4:avatar4,
-        5:avatar8,
-        6:avatar6,
-        7:avatar9,
-        8:avatar10,
-        9:avatar5,
-        10:avatar11,
-        11:avatar1
+        0:avatar1,
+        1:avatar2,
+        2:avatar3,
+        3:avatar4,
+        4:avatar5,
+        // 5:avatar8,
+        // 6:avatar6,
+        // 7:avatar9,
+        // 8:avatar10,
+        // 9:avatar5,
+        // 10:avatar11,
+        // 11:avatar1
       },
-      avatarTotal: 12,
+      avatarTotal: 5,
       avatarCurrent: 0,
       isSupportCanvas: true,
       iswxConfig: true,
@@ -371,7 +371,8 @@ export default {
   watch: {
     count: async(val) => {
       // console.log(val)
-      if (val === 12) {
+      console.log()
+      if (val === 5) {
         setTimeout(() =>{
           document.getElementById("loading").style.display="none"
           document.getElementById("main").style.display="inline"
