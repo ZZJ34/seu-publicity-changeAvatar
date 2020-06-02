@@ -2,6 +2,7 @@
   <div id="app" @touchmove.prevent @mousewheel.prevent>
     <div id='main'>
       <div v-if="isSupportCanvas && iswxConfig" >
+        <canvas id="init" @click="change"></canvas>
         <canvas id="page"></canvas>
         <!--<canvas id="avatar"></canvas>-->
         <img id="avatar" :src="avatarExtend" crossorigin='anonymous'>
@@ -27,7 +28,8 @@
 </template>
 
 <script>
-import background from "./assets/anniversary-background.png"
+import background from "./assets/anniversary-background.jpg"
+import backgroundInit from "./assets/y-anniversary-background-init.png"
 import emptyPlaceholder from "./assets/home-empty.png";
 import avatar1 from "./assets/y1.png"
 // eslint-disable-next-line no-unused-vars
@@ -39,19 +41,21 @@ import avatar4 from "./assets/y4.png"
 // eslint-disable-next-line no-unused-vars
 import avatar5 from "./assets/y5.png"
 // eslint-disable-next-line no-unused-vars
-import avatar6 from "./assets/6.png"
+import avatar6 from "./assets/y6.png"
 // eslint-disable-next-line no-unused-vars
-import avatar7 from "./assets/7.png"
+import avatar7 from "./assets/y7.png"
 // eslint-disable-next-line no-unused-vars
-import avatar8 from "./assets/8.png"
+import avatar8 from "./assets/y8.png"
 // eslint-disable-next-line no-unused-vars
-import avatar9 from "./assets/9.png"
+import avatar9 from "./assets/y9.png"
 // eslint-disable-next-line no-unused-vars
-import avatar10 from "./assets/10.png"
+import avatar10 from "./assets/y10.png"
 // eslint-disable-next-line no-unused-vars
-import avatar11 from "./assets/11.png"
+import avatar11 from "./assets/y11.png"
 // eslint-disable-next-line no-unused-vars
-import avatar12 from "./assets/12.png"
+import avatar12 from "./assets/y12.png"
+// eslint-disable-next-line no-unused-vars
+import avatar13 from "./assets/y13.png"
 import arrowLeft from "./assets/anniversary-left.png"
 import arrowRight from "./assets/anniversary-right.png"
 export default {
@@ -59,6 +63,7 @@ export default {
   data(){
     return{
       background,
+      backgroundInit,
       arrowLeft,
       arrowRight,
       emptyPlaceholder,
@@ -68,15 +73,16 @@ export default {
         2:avatar3,
         3:avatar4,
         4:avatar5,
-        // 5:avatar8,
-        // 6:avatar6,
-        // 7:avatar9,
-        // 8:avatar10,
-        // 9:avatar5,
-        // 10:avatar11,
-        // 11:avatar1
+        5:avatar6,
+        6:avatar7,
+        7:avatar8,
+        8:avatar9,
+        9:avatar10,
+        10:avatar11,
+        11:avatar12,
+        12:avatar13,
       },
-      avatarTotal: 5,
+      avatarTotal: 13,
       avatarCurrent: 0,
       isSupportCanvas: true,
       iswxConfig: true,
@@ -91,6 +97,34 @@ export default {
     }
   },
   methods:{
+    // 初始化一开始的背景
+    initFirstCanvas(){
+      let canvas = document.getElementById('init')
+      let ctx = canvas.getContext('2d')
+      // 画布高度
+      let winH = window.innerHeight
+      // 画布宽度
+      let winW = 906 / 1671 * winH 
+      canvas.width = winW
+      canvas.height = winH
+      //解决一下清晰度
+      let devicePixelRatio = window.devicePixelRatio || 1  
+      let backingStoreRatio = ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1
+      let ratio = devicePixelRatio / backingStoreRatio
+      let oldWidth = canvas.width; 
+      let oldHeight = canvas.height; 
+      canvas.width = oldWidth * ratio; 
+      canvas.height = oldHeight * ratio; 
+      canvas.style.width = oldWidth + 'px'; 
+      canvas.style.height = oldHeight + 'px'; 
+      ctx.scale(ratio, ratio); 
+      // 装载图片
+      let imgBackground = new Image()
+      imgBackground.onload = () => {
+        ctx.drawImage(imgBackground,0,0,winW,winH)
+      }
+      imgBackground.src = this.backgroundInit
+    },
     // 初始化背景画布
     initCanvas(){
       let canvas = document.getElementById('page')
@@ -233,6 +267,11 @@ export default {
       this.avatarExtend = this.avatarList[Math.abs(this.avatarCurrent % this.avatarTotal)]
     },
 
+    // 点击，隐藏初始化界面
+    change(){
+      document.getElementById("init").style.display="none"
+    },
+
     changeLeft(){
       // console.log(this.avatarCurrent)
       // console.log(Math.abs(this.avatarCurrent % this.avatarTotal))
@@ -339,6 +378,7 @@ export default {
     if (canvas.getContext){
       console.log("我可以支持")
       this.initCanvas()
+      this.initFirstCanvas()
       // this.initAvatar()
       this.initImg()
       this.initArrow()
@@ -347,6 +387,7 @@ export default {
         // this.initAvatar()
         this.initImg()
         this.initArrow()
+        this.initFirstCanvas()
       }
     } else {
       console.log("我不支持")
@@ -359,7 +400,7 @@ export default {
       image.src = this.avatarList[i]
       image.onload = () =>{
         this.count++
-        this.percent = `${Math.floor(this.count / 12 * 100)}%`
+        this.percent = `${Math.floor(this.count / this.avatarTotal * 100)}%`
         document.getElementById("percent").style.background=`linear-gradient(to top, #f6ab00 ${this.percent}, white ${this.percent})`
         document.getElementById("percent").style.WebkitBackgroundClip='text'
         document.getElementById("percent").style.color='transparent'
@@ -370,9 +411,9 @@ export default {
   },
   watch: {
     count: async(val) => {
-      // console.log(val)
-      console.log()
-      if (val === 5) {
+      // 根据实际的头像挂饰数量修改
+      
+      if (val === 13) {
         setTimeout(() =>{
           document.getElementById("loading").style.display="none"
           document.getElementById("main").style.display="inline"
@@ -421,11 +462,17 @@ export default {
   left: calc(50vw - @page-weight * 0.5);
   top: 0px;
 }
+#init {
+  z-index: 100;
+  position: absolute;
+  left: calc(50vw - @page-weight * 0.5);
+  top: 0px;
+}
 #avatar{
   z-index: 10;
   position: absolute;
   left: calc(50vw - @side-length * 0.50);
-  top: calc(46vh - @side-length * 0.53);
+  top: calc(50vh - @side-length * 0.53);
   width: @side-length;
   height: @side-length;
 }
@@ -433,7 +480,7 @@ export default {
   z-index: 9;
   position: absolute;
   left: calc(50vw - @side-length * 0.50);
-  top: calc(46vh - @side-length * 0.53);
+  top: calc(50vh - @side-length * 0.53);
   width: @side-length;
   height: @side-length;
 }
@@ -441,7 +488,7 @@ export default {
   z-index: 20;
   position: absolute;
   left: calc(50vw - @arrow-interval - @arrow-width * 0.5);
-  top: calc(46vh - @arrow-height * 0.54);
+  top: calc(50vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
 }
@@ -449,7 +496,7 @@ export default {
   z-index: 20;
   position: absolute;
   left: calc(50vw + @arrow-interval - @arrow-width * 0.5);
-  top: calc(46vh - @arrow-height * 0.54);
+  top: calc(50vh - @arrow-height * 0.54);
   width: @arrow-width;
   height: @arrow-height;
 }
@@ -457,7 +504,7 @@ export default {
   z-index: 10;
   position: absolute;
   left: calc(50vw - @button-width * 0.5);
-  top: calc(63vh);
+  top: calc(66vh);
   border-radius: 20px;
   outline: none;
   padding: 0px;
@@ -486,7 +533,7 @@ export default {
   font-size: calc(0.022 * 100vh);
   position: absolute;
   left: calc(50vw - 6 * 0.022 * 100vh * 0.5);
-  top: calc(56.5vh);
+  top: calc(50.5vh);
   
 }
 #percentTip{
